@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>童顺历的博客 · 个人博客系统</title>
+<style>
+:root{
+  --navy:#1E2A5A; --deep:#141F45; --gold:#F2A93B; --gold-light:#F7C873;
+  --light:#F4F7FB; --ink:#222B45; --muted:#5A6478; --line:#D9E1F0; --white:#FFF;
+  --green:#2E9E5B; --red:#C0392B;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;background:var(--light);color:var(--ink);line-height:1.6}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;font-family:inherit}
+
+/* 导航 */
+nav{position:sticky;top:0;z-index:100;background:var(--deep);color:#fff;box-shadow:0 2px 12px rgba(0,0,0,.15)}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-size:20px;font-weight:bold;display:flex;align-items:center;gap:10px}
+.logo span.dot{width:10px;height:10px;border-radius:50%;background:var(--gold)}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{opacity:.85;font-size:15px;transition:.2s}
+.nav-links a:hover,.nav-links a.active{opacity:1;color:var(--gold-light)}
+.btn{padding:8px 20px;border-radius:6px;border:none;font-size:14px;transition:.2s;display:inline-flex;align-items:center;gap:6px}
+.btn-gold{background:var(--gold);color:var(--deep);font-weight:600}
+.btn-gold:hover{background:var(--gold-light)}
+.btn-ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3)}
+.btn-ghost:hover{background:rgba(255,255,255,.1)}
+.btn-outline{background:transparent;color:var(--navy);border:1px solid var(--line)}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,var(--deep) 0%,var(--navy) 100%);color:#fff;padding:60px 24px;text-align:center}
+.hero h1{font-size:36px;margin-bottom:12px}
+.hero h1 em{color:var(--gold);font-style:normal}
+.hero p{opacity:.8;font-size:16px}
+
+/* 容器 */
+.container{max-width:1100px;margin:0 auto;padding:32px 24px}
+.section-title{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+.section-title h2{font-size:22px;color:var(--navy)}
+.section-title::before{content:"";width:4px;height:22px;background:var(--gold);border-radius:2px}
+
+/* 筛选栏 */
+.toolbar{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap;align-items:center}
+.search-box{flex:1;min-width:200px;position:relative}
+.search-box input{width:100%;padding:10px 14px;border:1px solid var(--line);border-radius:8px;font-size:14px;outline:none;transition:.2s}
+.search-box input:focus{border-color:var(--gold)}
+.cat-tabs{display:flex;gap:8px;flex-wrap:wrap}
+.cat-tab{padding:8px 16px;border-radius:20px;border:1px solid var(--line);background:#fff;font-size:13px;transition:.2s}
+.cat-tab.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+/* 文章卡片 */
+.post-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+.post-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(30,42,90,.06);transition:.25s;cursor:pointer;border:1px solid var(--line)}
+.post-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(30,42,90,.12)}
+.post-cover{height:160px;background:linear-gradient(135deg,var(--navy),var(--gold));display:flex;align-items:center;justify-content:center;color:#fff;font-size:32px;font-weight:bold}
+.post-body{padding:18px}
+.post-cat{display:inline-block;padding:3px 10px;background:var(--light);color:var(--navy);border-radius:4px;font-size:12px;margin-bottom:10px}
+.post-card h3{font-size:17px;color:var(--ink);margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.post-meta{display:flex;gap:14px;color:var(--muted);font-size:12px;margin-top:12px}
+.post-meta span{display:flex;align-items:center;gap:4px}
+
+/* 详情页 */
+.detail-wrap{max-width:760px;margin:0 auto;padding:32px 24px}
+.detail-cat{display:inline-block;padding:4px 14px;background:var(--gold);color:var(--deep);border-radius:4px;font-size:13px;font-weight:600;margin-bottom:16px}
+.detail-wrap h1{font-size:30px;color:var(--navy);margin-bottom:16px;line-height:1.4}
+.detail-meta{display:flex;gap:18px;color:var(--muted);font-size:13px;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+.detail-content{font-size:16px;line-height:1.9;white-space:pre-wrap}
+.detail-actions{display:flex;gap:12px;margin-top:32px}
+
+/* 表单（登录/注册/写文章） */
+.form-card{max-width:480px;margin:40px auto;background:#fff;border-radius:12px;padding:36px;box-shadow:0 2px 16px rgba(30,42,90,.08)}
+.form-card h2{text-align:center;color:var(--navy);margin-bottom:24px}
+.form-group{margin-bottom:18px}
+.form-group label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:10px 14px;border:1px solid var(--line);border-radius:8px;font-size:14px;outline:none;font-family:inherit;transition:.2s}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--gold)}
+.form-group textarea{min-height:120px;resize:vertical}
+.form-actions{display:flex;gap:12px;margin-top:24px}
+.form-actions .btn{flex:1;justify-content:center;padding:12px}
+.form-hint{text-align:center;margin-top:16px;font-size:13px;color:var(--muted)}
+.form-hint a{color:var(--gold);font-weight:600}
+
+/* 编辑器 */
+.editor-wrap{max-width:900px;margin:0 auto;padding:32px 24px}
+.editor-layout{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.editor-layout textarea{min-height:500px;font-family:Consolas,monospace;font-size:14px;line-height:1.6}
+.preview{background:#fff;border:1px solid var(--line);border-radius:8px;padding:20px;min-height:500px;overflow:auto}
+.preview h1{font-size:24px;margin:16px 0;color:var(--navy)}
+.preview h2{font-size:20px;margin:14px 0;color:var(--navy)}
+.preview p{margin:10px 0}
+.preview code{background:var(--light);padding:2px 6px;border-radius:4px;font-family:Consolas,monospace;font-size:13px}
+
+/* 分页 */
+.pagination{display:flex;justify-content:center;gap:8px;margin-top:32px}
+.page-btn{padding:8px 14px;border:1px solid var(--line);background:#fff;border-radius:6px;font-size:13px;transition:.2s}
+.page-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.page-btn:disabled{opacity:.4;cursor:not-allowed}
+
+/* 提示 */
+.toast{position:fixed;top:24px;left:50%;transform:translateX(-50%);padding:12px 24px;border-radius:8px;color:#fff;font-size:14px;z-index:999;animation:fadeIn .3s}
+.toast.success{background:var(--green)}.toast.error{background:var(--red)}
+@keyframes fadeIn{from{opacity:0;transform:translate(-50%,-10px)}to{opacity:1;transform:translate(-50%,0)}}
+
+.hidden{display:none}
+.empty{text-align:center;padding:60px 20px;color:var(--muted)}
+
+@media(max-width:768px){
+  .editor-layout{grid-template-columns:1fr}
+  .post-grid{grid-template-columns:1fr}
+  .hero h1{font-size:26px}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <div class="logo" onclick="go('home')"><span class="dot"></span>童顺历的博客</div>
+    <div class="nav-links">
+      <a href="#" onclick="go('home')">首页</a>
+      <a href="#" id="navWrite" class="hidden" onclick="go('write')">写文章</a>
+      <a href="#" id="navLogin" onclick="go('login')">登录</a>
+      <a href="#" id="navRegister" class="hidden" onclick="go('register')">注册</a>
+      <a href="#" id="navUser" class="hidden" onclick="logout()">退出</a>
+    </div>
+  </div>
+</nav>
+
+<!-- 首页 -->
+<div id="page-home">
+  <div class="hero">
+    <h1>记录学习与思考的<em>数字花园</em></h1>
+    <p>技术笔记 · 生活随笔 · 课程作业 · 读书感悟</p>
+  </div>
+  <div class="container">
+    <div class="section-title"><h2>最新文章</h2></div>
+    <div class="toolbar">
+      <div class="search-box"><input id="searchInput" placeholder="搜索文章标题或内容..." oninput="debounceSearch()"></div>
+      <div class="cat-tabs" id="catTabs"></div>
+    </div>
+    <div class="post-grid" id="postGrid"></div>
+    <div class="pagination" id="pagination"></div>
+  </div>
+</div>
+
+<!-- 文章详情 -->
+<div id="page-detail" class="hidden">
+  <div class="detail-wrap" id="detailContent"></div>
+</div>
+
+<!-- 登录 -->
+<div id="page-login" class="hidden">
+  <div class="form-card">
+    <h2>登录</h2>
+    <div class="form-group"><label>用户名</label><input id="loginUser" placeholder="请输入用户名"></div>
+    <div class="form-group"><label>密码</label><input id="loginPass" type="password" placeholder="请输入密码"></div>
+    <div class="form-actions"><button class="btn btn-gold" onclick="doLogin()">登 录</button></div>
+    <p class="form-hint">还没有账号？<a href="#" onclick="go('register')">立即注册</a></p>
+  </div>
+</div>
+
+<!-- 注册 -->
+<div id="page-register" class="hidden">
+  <div class="form-card">
+    <h2>注册</h2>
+    <div class="form-group"><label>用户名</label><input id="regUser" placeholder="2-20 字符"></div>
+    <div class="form-group"><label>邮箱</label><input id="regEmail" placeholder="your@email.com"></div>
+    <div class="form-group"><label>密码</label><input id="regPass" type="password" placeholder="至少 6 位"></div>
+    <div class="form-actions"><button class="btn btn-gold" onclick="doRegister()">注 册</button></div>
+    <p class="form-hint">已有账号？<a href="#" onclick="go('login')">去登录</a></p>
+  </div>
+</div>
+
+<!-- 写文章 -->
+<div id="page-write" class="hidden">
+  <div class="editor-wrap">
+    <div class="section-title"><h2 id="writeTitle">写文章</h2></div>
+    <div class="form-group"><label>标题</label><input id="postTitle" placeholder="请输入文章标题"></div>
+    <div class="form-group" style="display:flex;gap:12px">
+      <div style="flex:1"><label>分类</label><select id="postCategory"></select></div>
+      <div style="flex:1"><label>标签（逗号分隔）</label><input id="postTags" placeholder="如: 前端,Vue"></div>
+    </div>
+    <div class="editor-layout">
+      <textarea id="postContent" placeholder="在这里用 Markdown 写文章..." oninput="renderPreview()"></textarea>
+      <div class="preview" id="preview"><p style="color:var(--muted)">预览区</p></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-outline" onclick="go('home')">取消</button>
+      <button class="btn btn-gold" onclick="savePost()">发布文章</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = "";
+let state = { page: "home", token: localStorage.getItem("token"), user: JSON.parse(localStorage.getItem("user")||"null"), currentPage: 1, currentCat: "", currentKeyword: "", editingId: null };
+
+function toast(msg, type="success"){ const t=document.createElement("div"); t.className="toast "+type; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2500); }
+function go(page){ state.page=page; ["home","detail","login","register","write"].forEach(p=>document.getElementById("page-"+p).classList.toggle("hidden",p!==page)); window.scrollTo(0,0); if(page==="home")loadPosts(); if(page==="write")loadCategoriesForEditor(); }
+function updateNav(){ const has=!!state.token; document.getElementById("navWrite").classList.toggle("hidden",!has); document.getElementById("navLogin").classList.toggle("hidden",has); document.getElementById("navRegister").classList.toggle("hidden",has); document.getElementById("navUser").classList.toggle("hidden",!has); if(has)document.getElementById("navUser").textContent=state.user.username+" (退出)"; }
+
+async function api(url, opts={}){ const r=await fetch(API+url,{headers:{"Content-Type":"application/json",...(state.token?{Authorization:"Bearer "+state.token}:{})},...opts}); const d=await r.json(); if(!r.ok)throw new Error(d.error||"请求失败"); return d; }
+
+async function loadCategories(){ try{ const cats=await api("/api/categories"); const tabs=document.getElementById("catTabs"); tabs.innerHTML='<button class="cat-tab active" onclick="filterCat(\'\')">全部</button>'+cats.map(c=>`<button class="cat-tab" onclick="filterCat('${c.name}')">${c.name}</button>`).join(""); }catch(e){} }
+function filterCat(cat){ state.currentCat=cat; state.currentPage=1; document.querySelectorAll(".cat-tab").forEach((t,i)=>t.classList.toggle("active",(i===0&&!cat)||t.textContent===cat)); loadPosts(); }
+let searchTimer;
+function debounceSearch(){ clearTimeout(searchTimer); searchTimer=setTimeout(()=>{state.currentKeyword=document.getElementById("searchInput").value;state.currentPage=1;loadPosts();},400); }
+
+async function loadPosts(){
+  try{
+    const params=new URLSearchParams({page:state.currentPage,pageSize:6});
+    if(state.currentCat)params.set("category",state.currentCat);
+    if(state.currentKeyword)params.set("keyword",state.currentKeyword);
+    const {list,total,pageSize}=await api("/api/posts?"+params);
+    const grid=document.getElementById("postGrid");
+    if(list.length===0){ grid.innerHTML='<div class="empty" style="grid-column:1/-1">暂无文章</div>'; document.getElementById("pagination").innerHTML=""; return; }
+    grid.innerHTML=list.map(p=>`
+      <div class="post-card" onclick="viewPost(${p.id})">
+        <div class="post-cover">${(p.title||"?").charAt(0)}</div>
+        <div class="post-body">
+          ${p.category?`<span class="post-cat">${p.category}</span>`:""}
+          <h3>${p.title}</h3>
+          <div class="post-meta"><span>👤 ${p.author_name}</span><span>👁 ${p.views}</span><span>🕒 ${p.created_at.slice(0,10)}</span></div>
+        </div>
+      </div>`).join("");
+    const pages=Math.ceil(total/pageSize);
+    let pg='<button class="page-btn" '+(state.currentPage<=1?"disabled":"")+' onclick="goPage('+(state.currentPage-1)+')">上一页</button>';
+    for(let i=1;i<=pages;i++) pg+=`<button class="page-btn ${i===state.currentPage?"active":""}" onclick="goPage(${i})">${i}</button>`;
+    pg+='<button class="page-btn" '+(state.currentPage>=pages?"disabled":"")+' onclick="goPage('+(state.currentPage+1)+')">下一页</button>';
+    document.getElementById("pagination").innerHTML=pages>1?pg:"";
+  }catch(e){ toast(e.message,"error"); }
+}
+function goPage(p){ state.currentPage=p; loadPosts(); }
+
+async function viewPost(id){
+  try{ const p=await api("/api/posts/"+id); document.getElementById("detailContent").innerHTML=`
+    ${p.category?`<span class="detail-cat">${p.category}</span>`:""}
+    <h1>${p.title}</h1>
+    <div class="detail-meta"><span>👤 ${p.author_name}</span><span>👁 ${p.views} 次浏览</span><span>🕒 ${p.created_at}</span></div>
+    <div class="detail-content">${escapeHtml(p.content)}</div>
+    ${state.user&&state.user.id===p.author_id?`<div class="detail-actions"><button class="btn btn-outline" onclick="editPost(${p.id})">编辑</button><button class="btn btn-outline" style="color:var(--red)" onclick="delPost(${p.id})">删除</button></div>`:""}`; go("detail"); }catch(e){ toast(e.message,"error"); }
+}
+function escapeHtml(s){ const d=document.createElement("div"); d.textContent=s; return d.innerHTML; }
+
+async function doRegister(){
+  const username=document.getElementById("regUser").value, email=document.getElementById("regEmail").value, password=document.getElementById("regPass").value;
+  try{ await api("/api/auth/register",{method:"POST",body:JSON.stringify({username,email,password})}); toast("注册成功，请登录"); go("login"); }catch(e){ toast(e.message,"error"); }
+}
+async function doLogin(){
+  const username=document.getElementById("loginUser").value, password=document.getElementById("loginPass").value;
+  try{ const r=await api("/api/auth/login",{method:"POST",body:JSON.stringify({username,password})}); state.token=r.token; state.user=r.user; localStorage.setItem("token",r.token); localStorage.setItem("user",JSON.stringify(r.user)); updateNav(); toast("登录成功"); go("home"); }catch(e){ toast(e.message,"error"); }
+}
+function logout(){ state.token=null; state.user=null; localStorage.removeItem("token"); localStorage.removeItem("user"); updateNav(); go("home"); toast("已退出"); }
+
+async function loadCategoriesForEditor(){
+  try{ const cats=await api("/api/categories"); const sel=document.getElementById("postCategory"); sel.innerHTML=cats.map(c=>`<option value="${c.name}">${c.name}</option>`).join(""); }catch(e){}
+}
+function renderPreview(){ const c=document.getElementById("postContent").value; const p=document.getElementById("preview"); p.innerHTML=c?escapeHtml(c).replace(/\n/g,"<br>"):'<p style="color:var(--muted)">预览区</p>'; }
+async function savePost(){
+  const title=document.getElementById("postTitle").value, content=document.getElementById("postContent").value, category=document.getElementById("postCategory").value, tags=document.getElementById("postTags").value.split(",").map(s=>s.trim()).filter(Boolean);
+  if(!title||!content){ toast("标题和内容不能为空","error"); return; }
+  try{
+    if(state.editingId){ await api("/api/posts/"+state.editingId,{method:"PUT",body:JSON.stringify({title,content,category,tags})}); toast("修改成功"); }
+    else{ await api("/api/posts",{method:"POST",body:JSON.stringify({title,content,category,tags})}); toast("发布成功"); }
+    state.editingId=null; go("home");
+  }catch(e){ toast(e.message,"error"); }
+}
+async function editPost(id){
+  try{ const p=await api("/api/posts/"+id); state.editingId=id; document.getElementById("writeTitle").textContent="编辑文章"; document.getElementById("postTitle").value=p.title; document.getElementById("postContent").value=p.content; document.getElementById("postTags").value=(p.tags||"[]").replace(/[\[\]"']/g,""); document.getElementById("postCategory").value=p.category; renderPreview(); go("write"); }catch(e){ toast(e.message,"error"); }
+}
+async function delPost(id){ if(!confirm("确认删除这篇文章？"))return; try{ await api("/api/posts/"+id,{method:"DELETE"}); toast("已删除"); go("home"); }catch(e){ toast(e.message,"error"); } }
+
+// 初始化
+updateNav();
+loadCategories();
+loadPosts();
+// 支持 ?page= 参数用于截图
+const urlPage = new URLSearchParams(location.search).get("page");
+if (urlPage) {
+  if (urlPage === "login") go("login");
+  else if (urlPage === "register") go("register");
+  else if (urlPage === "detail") {
+    const id = new URLSearchParams(location.search).get("id") || 1;
+    viewPost(id);
+  } else if (urlPage === "write") {
+    // 截图预览模式：直接显示编辑器
+    const preview = new URLSearchParams(location.search).get("preview");
+    if (preview === "1") {
+      state.token = "preview";
+      state.user = { id: 1, username: "tongshunli" };
+      loadCategoriesForEditor();
+      setTimeout(() => {
+        document.getElementById("postTitle").value = "示例：我的第一篇博客";
+        document.getElementById("postContent").value = "# 欢迎来到我的博客\n\n这是用 Markdown 编写的文章内容。\n\n- 支持列表\n- 支持**加粗**\n- 支持代码片段";
+        renderPreview();
+      }, 500);
+      go("write");
+    } else {
+      state.token = localStorage.getItem("token");
+      state.user = JSON.parse(localStorage.getItem("user") || "null");
+      if (state.token) go("write");
+    }
+  }
+}
+</script>
+</body>
+</html>
