@@ -5,113 +5,123 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>童顺历的博客 · 个人博客系统</title>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
 :root{
-  --navy:#1E2A5A; --deep:#141F45; --gold:#F2A93B; --gold-light:#F7C873;
-  --light:#F4F7FB; --ink:#222B45; --muted:#5A6478; --line:#D9E1F0; --white:#FFF;
+  --navy:#1E2A5A; --deep:#141F45; --gold:#C8962E; --gold-light:#E5B84C;
+  --paper:#FAF8F3; --ink:#1A1F36; --muted:#6B7280; --line:#E5E1D8; --white:#FFF;
   --green:#2E9E5B; --red:#C0392B;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;background:var(--light);color:var(--ink);line-height:1.6}
+body{font-family:"Noto Sans SC","Microsoft YaHei",sans-serif;background:var(--paper);color:var(--ink);line-height:1.7}
 a{color:inherit;text-decoration:none}
 button{cursor:pointer;font-family:inherit}
 
-/* 导航 */
-nav{position:sticky;top:0;z-index:100;background:var(--deep);color:#fff;box-shadow:0 2px 12px rgba(0,0,0,.15)}
-.nav-inner{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:64px}
-.logo{font-size:20px;font-weight:bold;display:flex;align-items:center;gap:10px}
-.logo span.dot{width:10px;height:10px;border-radius:50%;background:var(--gold)}
+/* 导航 —— 极简，无重阴影 */
+nav{position:sticky;top:0;z-index:100;background:var(--deep);color:#fff;border-bottom:1px solid rgba(255,255,255,.08)}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{font-family:"Noto Serif SC",serif;font-size:19px;font-weight:600;display:flex;align-items:center;gap:10px;letter-spacing:.02em}
+.logo span.dot{width:8px;height:8px;border-radius:50%;background:var(--gold)}
 .nav-links{display:flex;gap:28px;align-items:center}
-.nav-links a{opacity:.85;font-size:15px;transition:.2s}
+.nav-links a{opacity:.7;font-size:14px;font-weight:400;transition:.2s;letter-spacing:.03em}
 .nav-links a:hover,.nav-links a.active{opacity:1;color:var(--gold-light)}
-.btn{padding:8px 20px;border-radius:6px;border:none;font-size:14px;transition:.2s;display:inline-flex;align-items:center;gap:6px}
-.btn-gold{background:var(--gold);color:var(--deep);font-weight:600}
+.btn{padding:9px 22px;border-radius:4px;border:none;font-size:14px;transition:.2s;display:inline-flex;align-items:center;gap:6px;font-weight:500}
+.btn-gold{background:var(--gold);color:var(--deep)}
 .btn-gold:hover{background:var(--gold-light)}
-.btn-ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3)}
-.btn-ghost:hover{background:rgba(255,255,255,.1)}
+.btn-ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.25)}
+.btn-ghost:hover{background:rgba(255,255,255,.08)}
 .btn-outline{background:transparent;color:var(--navy);border:1px solid var(--line)}
 .btn-outline:hover{border-color:var(--gold);color:var(--gold)}
 
-/* Hero */
-.hero{background:linear-gradient(135deg,var(--deep) 0%,var(--navy) 100%);color:#fff;padding:60px 24px;text-align:center}
-.hero h1{font-size:36px;margin-bottom:12px}
-.hero h1 em{color:var(--gold);font-style:normal}
-.hero p{opacity:.8;font-size:16px}
+/* Hero —— 不对称编辑风格，左对齐大字 */
+.hero{background:var(--deep);color:#fff;padding:72px 32px 64px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-80px;top:-80px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(200,150,46,.18),transparent 70%)}
+.hero-inner{max-width:1100px;margin:0 auto;position:relative}
+.hero h1{font-family:"Noto Serif SC",serif;font-size:44px;font-weight:700;line-height:1.25;margin-bottom:18px;letter-spacing:-.01em}
+.hero h1 .accent{color:var(--gold-light);font-weight:400}
+.hero p{opacity:.65;font-size:15px;max-width:420px;line-height:1.8;font-weight:300}
 
 /* 容器 */
-.container{max-width:1100px;margin:0 auto;padding:32px 24px}
-.section-title{display:flex;align-items:center;gap:12px;margin-bottom:24px}
-.section-title h2{font-size:22px;color:var(--navy)}
-.section-title::before{content:"";width:4px;height:22px;background:var(--gold);border-radius:2px}
+.container{max-width:1100px;margin:0 auto;padding:48px 32px}
+.section-title{display:flex;align-items:baseline;gap:14px;margin-bottom:32px}
+.section-title h2{font-family:"Noto Serif SC",serif;font-size:26px;font-weight:600;color:var(--navy);letter-spacing:.01em}
+.section-title .count{font-size:13px;color:var(--muted);font-weight:400}
 
 /* 筛选栏 */
-.toolbar{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap;align-items:center}
-.search-box{flex:1;min-width:200px;position:relative}
-.search-box input{width:100%;padding:10px 14px;border:1px solid var(--line);border-radius:8px;font-size:14px;outline:none;transition:.2s}
+.toolbar{display:flex;gap:14px;margin-bottom:32px;flex-wrap:wrap;align-items:center}
+.search-box{flex:1;min-width:220px}
+.search-box input{width:100%;padding:11px 16px;border:1px solid var(--line);border-radius:4px;font-size:14px;outline:none;transition:.2s;background:#fff;font-family:inherit}
 .search-box input:focus{border-color:var(--gold)}
-.cat-tabs{display:flex;gap:8px;flex-wrap:wrap}
-.cat-tab{padding:8px 16px;border-radius:20px;border:1px solid var(--line);background:#fff;font-size:13px;transition:.2s}
-.cat-tab.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.cat-tabs{display:flex;gap:6px;flex-wrap:wrap}
+.cat-tab{padding:8px 16px;border-radius:4px;border:1px solid transparent;background:transparent;color:var(--muted);font-size:13px;transition:.2s;cursor:pointer}
+.cat-tab:hover{color:var(--navy)}
+.cat-tab.active{background:var(--navy);color:#fff}
 
-/* 文章卡片 */
-.post-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
-.post-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(30,42,90,.06);transition:.25s;cursor:pointer;border:1px solid var(--line)}
-.post-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(30,42,90,.12)}
-.post-cover{height:160px;background:linear-gradient(135deg,var(--navy),var(--gold));display:flex;align-items:center;justify-content:center;color:#fff;font-size:32px;font-weight:bold}
-.post-body{padding:18px}
-.post-cat{display:inline-block;padding:3px 10px;background:var(--light);color:var(--navy);border-radius:4px;font-size:12px;margin-bottom:10px}
-.post-card h3{font-size:17px;color:var(--ink);margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.post-meta{display:flex;gap:14px;color:var(--muted);font-size:12px;margin-top:12px}
+/* 文章卡片 —— 无圆角封面，边框分割，杂志感 */
+.post-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:28px}
+.post-card{background:#fff;transition:.3s;cursor:pointer;border:1px solid var(--line)}
+.post-card:hover{border-color:var(--gold);box-shadow:0 12px 32px rgba(30,42,90,.08)}
+.post-cover{height:150px;background:var(--deep);display:flex;align-items:center;justify-content:center;color:var(--gold-light);font-family:"Noto Serif SC",serif;font-size:38px;font-weight:700;position:relative}
+.post-cover::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(200,150,46,.12),transparent)}
+.post-body{padding:20px}
+.post-cat{display:inline-block;padding:3px 10px;background:var(--paper);color:var(--gold);border:1px solid var(--line);font-size:11px;margin-bottom:12px;letter-spacing:.05em}
+.post-card h3{font-family:"Noto Serif SC",serif;font-size:18px;font-weight:600;color:var(--ink);margin-bottom:10px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.post-card h3:hover{color:var(--navy)}
+.post-meta{display:flex;gap:16px;color:var(--muted);font-size:12px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
 .post-meta span{display:flex;align-items:center;gap:4px}
 
 /* 详情页 */
-.detail-wrap{max-width:760px;margin:0 auto;padding:32px 24px}
-.detail-cat{display:inline-block;padding:4px 14px;background:var(--gold);color:var(--deep);border-radius:4px;font-size:13px;font-weight:600;margin-bottom:16px}
-.detail-wrap h1{font-size:30px;color:var(--navy);margin-bottom:16px;line-height:1.4}
-.detail-meta{display:flex;gap:18px;color:var(--muted);font-size:13px;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid var(--line)}
-.detail-content{font-size:16px;line-height:1.9;white-space:pre-wrap}
-.detail-actions{display:flex;gap:12px;margin-top:32px}
+.detail-wrap{max-width:720px;margin:0 auto;padding:48px 32px}
+.detail-cat{display:inline-block;padding:4px 14px;background:var(--navy);color:#fff;font-size:12px;margin-bottom:20px;letter-spacing:.08em}
+.detail-wrap h1{font-family:"Noto Serif SC",serif;font-size:34px;font-weight:700;color:var(--ink);margin-bottom:18px;line-height:1.35;letter-spacing:-.01em}
+.detail-meta{display:flex;gap:20px;color:var(--muted);font-size:13px;margin-bottom:32px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.detail-content{font-size:16px;line-height:2;color:var(--ink);white-space:pre-wrap}
+.detail-actions{display:flex;gap:12px;margin-top:40px;padding-top:24px;border-top:1px solid var(--line)}
 
-/* 表单（登录/注册/写文章） */
-.form-card{max-width:480px;margin:40px auto;background:#fff;border-radius:12px;padding:36px;box-shadow:0 2px 16px rgba(30,42,90,.08)}
-.form-card h2{text-align:center;color:var(--navy);margin-bottom:24px}
-.form-group{margin-bottom:18px}
-.form-group label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
-.form-group input,.form-group textarea,.form-group select{width:100%;padding:10px 14px;border:1px solid var(--line);border-radius:8px;font-size:14px;outline:none;font-family:inherit;transition:.2s}
+/* 表单 */
+.form-card{max-width:460px;margin:56px auto;background:#fff;border:1px solid var(--line);padding:40px}
+.form-card h2{font-family:"Noto Serif SC",serif;text-align:center;color:var(--navy);margin-bottom:28px;font-size:24px;font-weight:600}
+.form-group{margin-bottom:20px}
+.form-group label{display:block;font-size:13px;color:var(--muted);margin-bottom:8px;font-weight:500}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:11px 14px;border:1px solid var(--line);border-radius:4px;font-size:14px;outline:none;font-family:inherit;transition:.2s;background:#fff}
 .form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--gold)}
 .form-group textarea{min-height:120px;resize:vertical}
-.form-actions{display:flex;gap:12px;margin-top:24px}
+.form-actions{display:flex;gap:12px;margin-top:28px}
 .form-actions .btn{flex:1;justify-content:center;padding:12px}
-.form-hint{text-align:center;margin-top:16px;font-size:13px;color:var(--muted)}
-.form-hint a{color:var(--gold);font-weight:600}
+.form-hint{text-align:center;margin-top:18px;font-size:13px;color:var(--muted)}
+.form-hint a{color:var(--gold);font-weight:500}
 
 /* 编辑器 */
-.editor-wrap{max-width:900px;margin:0 auto;padding:32px 24px}
+.editor-wrap{max-width:960px;margin:0 auto;padding:40px 32px}
+.editor-wrap h2{font-family:"Noto Serif SC",serif;font-size:24px;color:var(--navy);margin-bottom:24px;font-weight:600}
 .editor-layout{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.editor-layout textarea{min-height:500px;font-family:Consolas,monospace;font-size:14px;line-height:1.6}
-.preview{background:#fff;border:1px solid var(--line);border-radius:8px;padding:20px;min-height:500px;overflow:auto}
-.preview h1{font-size:24px;margin:16px 0;color:var(--navy)}
-.preview h2{font-size:20px;margin:14px 0;color:var(--navy)}
-.preview p{margin:10px 0}
-.preview code{background:var(--light);padding:2px 6px;border-radius:4px;font-family:Consolas,monospace;font-size:13px}
+.editor-layout textarea{min-height:520px;font-family:"Consolas",monospace;font-size:14px;line-height:1.7;border:1px solid var(--line);border-radius:4px;padding:16px;outline:none;resize:vertical}
+.editor-layout textarea:focus{border-color:var(--gold)}
+.preview{background:#fff;border:1px solid var(--line);border-radius:4px;padding:20px;min-height:520px;overflow:auto}
+.preview h1{font-family:"Noto Serif SC",serif;font-size:24px;margin:16px 0;color:var(--navy)}
+.preview h2{font-family:"Noto Serif SC",serif;font-size:20px;margin:14px 0;color:var(--navy)}
+.preview p{margin:10px 0;line-height:1.8}
+.preview code{background:var(--paper);padding:2px 6px;border-radius:3px;font-family:Consolas,monospace;font-size:13px;color:var(--navy)}
 
 /* 分页 */
-.pagination{display:flex;justify-content:center;gap:8px;margin-top:32px}
-.page-btn{padding:8px 14px;border:1px solid var(--line);background:#fff;border-radius:6px;font-size:13px;transition:.2s}
+.pagination{display:flex;justify-content:center;gap:6px;margin-top:40px}
+.page-btn{min-width:36px;height:36px;padding:0 12px;border:1px solid var(--line);background:#fff;border-radius:4px;font-size:13px;transition:.2s;color:var(--ink)}
 .page-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
-.page-btn:disabled{opacity:.4;cursor:not-allowed}
+.page-btn:disabled{opacity:.35;cursor:not-allowed}
 
 /* 提示 */
-.toast{position:fixed;top:24px;left:50%;transform:translateX(-50%);padding:12px 24px;border-radius:8px;color:#fff;font-size:14px;z-index:999;animation:fadeIn .3s}
+.toast{position:fixed;top:24px;left:50%;transform:translateX(-50%);padding:12px 24px;border-radius:4px;color:#fff;font-size:14px;z-index:999;animation:fadeIn .3s}
 .toast.success{background:var(--green)}.toast.error{background:var(--red)}
 @keyframes fadeIn{from{opacity:0;transform:translate(-50%,-10px)}to{opacity:1;transform:translate(-50%,0)}}
 
 .hidden{display:none}
-.empty{text-align:center;padding:60px 20px;color:var(--muted)}
+.empty{text-align:center;padding:60px 20px;color:var(--muted);font-family:"Noto Serif SC",serif}
 
 @media(max-width:768px){
   .editor-layout{grid-template-columns:1fr}
   .post-grid{grid-template-columns:1fr}
-  .hero h1{font-size:26px}
+  .hero h1{font-size:30px}
+  .hero{padding:48px 24px}
+  .nav-inner{padding:0 20px}
 }
 </style>
 </head>
@@ -132,11 +142,13 @@ nav{position:sticky;top:0;z-index:100;background:var(--deep);color:#fff;box-shad
 <!-- 首页 -->
 <div id="page-home">
   <div class="hero">
-    <h1>记录学习与思考的<em>数字花园</em></h1>
-    <p>技术笔记 · 生活随笔 · 课程作业 · 读书感悟</p>
+    <div class="hero-inner">
+      <h1>记录学习与思考的<span class="accent">数字花园</span></h1>
+      <p>技术笔记 · 生活随笔 · 课程作业 · 读书感悟</p>
+    </div>
   </div>
   <div class="container">
-    <div class="section-title"><h2>最新文章</h2></div>
+    <div class="section-title"><h2>最新文章</h2><span class="count" id="postCount"></span></div>
     <div class="toolbar">
       <div class="search-box"><input id="searchInput" placeholder="搜索文章标题或内容..." oninput="debounceSearch()"></div>
       <div class="cat-tabs" id="catTabs"></div>
@@ -215,6 +227,7 @@ async function loadPosts(){
     if(state.currentCat)params.set("category",state.currentCat);
     if(state.currentKeyword)params.set("keyword",state.currentKeyword);
     const {list,total,pageSize}=await api("/api/posts?"+params);
+    const pc=document.getElementById("postCount"); if(pc) pc.textContent="共 "+total+" 篇";
     const grid=document.getElementById("postGrid");
     if(list.length===0){ grid.innerHTML='<div class="empty" style="grid-column:1/-1">暂无文章</div>'; document.getElementById("pagination").innerHTML=""; return; }
     grid.innerHTML=list.map(p=>`
